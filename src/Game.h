@@ -22,6 +22,8 @@ private:
 
 	static Game* s_instance;
 
+	static size_t _backgroundSoundID;
+
 	static int LoadConfigurationFile();
 	static int LoadTextures();
 	static int LoadEntities();

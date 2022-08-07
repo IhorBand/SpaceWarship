@@ -23,6 +23,7 @@ public:
 private:
 	static uint64_t  _moveTextureID;
 	static Animation _moveAnimation;
+	static size_t _shootSoundID;
 
 	size_t _bodyID;
 

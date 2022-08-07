@@ -6,8 +6,10 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "SoundManager.h"
 
 Game* Game::s_instance = nullptr;
+size_t Game::_backgroundSoundID;
 
 Game::Game()
 {
@@ -53,6 +55,8 @@ int Game::LoadTextures()
 	Bullet::LoadTexture();
 	Player::LoadTexture();
 	Enemy::LoadTexture();
+
+	_backgroundSoundID = SoundManager::RegisterSound(PathHelper::GetExePath() + BACKGROUND_MUSIC_PATH);
 
 	return 0;
 }
@@ -110,6 +114,8 @@ int Game::Initialize()
 	Game::LoadTextures();
 
 	Game::LoadEntities();
+
+	SoundManager::PlayInstanceOf(_backgroundSoundID, 30, true);
 
 	return 0;
 }

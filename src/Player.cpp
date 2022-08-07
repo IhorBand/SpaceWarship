@@ -2,9 +2,11 @@
 
 #include "Bullet.h"
 #include "GameWorld.h"
+#include "SoundManager.h"
 
 uint64_t Player::_moveTextureID;
 Animation Player::_moveAnimation(8, 1, 512, 512, 8, 15);
+size_t Player::_shootSoundID;
 
 Player::Player() : WorldEntity(sf::Vector2f(300,200), sf::VertexArray(sf::Quads, 4), 0)
 {
@@ -30,6 +32,8 @@ void Player::LoadTexture()
 {
 	_moveTextureID = GameRender::RegisterTexture(PathHelper::GetExePath() + PLAYER_MOVE_ANIMATION_TEXTURE_PATH);
 	_moveAnimation.SetTextureID(_moveTextureID);
+
+	_shootSoundID = SoundManager::RegisterSound(PathHelper::GetExePath() + PLAYER_SHOOT_SOUND_PATH, 100);
 }
 
 void Player::Initialize()
@@ -88,6 +92,8 @@ void Player::Update(GameWorld& world, sf::Time elapsed)
 		CollisionBody* collisionBodyPtr = CollisionBody::Add();
 		collisionBodyPtr->setEntity(bulletPtr);
 		bulletPtr->SetBulletBodyID(world.AddPhysicEntity(collisionBodyPtr));
+
+		SoundManager::PlayInstanceOf(_shootSoundID, 10);
 
 		_isReadyToShoot = false;
 	}

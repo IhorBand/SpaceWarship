@@ -14,4 +14,8 @@
 #define ENEMY_MOVE_ANIMATION_TEXTURE_PATH "\\data\\textures\\enemy\\spaceship_enemy_start.png"
 #define ENEMY_EXPLOSION_ANIMATION_TEXTURE_PATH "\\data\\textures\\explosion\\red_explosion_anim.png"
 
+#define BACKGROUND_MUSIC_PATH "\\data\\sounds\\background\\battle.wav"
+#define PLAYER_SHOOT_SOUND_PATH "\\data\\sounds\\effects\\pew.wav"
+#define SPACESHIP_EXPLOSION_SOUND_PATH "\\data\\sounds\\effects\\boom.wav"
+
 #define SCALE 1.0f

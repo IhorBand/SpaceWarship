@@ -4,7 +4,7 @@ uint64_t Enemy::_moveTextureID;
 Animation Enemy::_moveAnimation(1, 1, 512, 512, 1, 15, true);
 uint64_t Enemy::_explosionTextureID;
 Animation Enemy::_explosionAnimation(17, 1, 256, 256, 17, 15, false);
-
+size_t Enemy::_explosionSoundID;
 
 Enemy::Enemy() : WorldEntity(sf::Vector2f(0, 0), sf::VertexArray(sf::Quads, 4), 0)
 {
@@ -33,6 +33,8 @@ void Enemy::LoadTexture()
 
 	_explosionTextureID = GameRender::RegisterTexture(PathHelper::GetExePath() + ENEMY_EXPLOSION_ANIMATION_TEXTURE_PATH);
 	_explosionAnimation.SetTextureID(_explosionTextureID);
+
+	_explosionSoundID = SoundManager::RegisterSound(PathHelper::GetExePath() + SPACESHIP_EXPLOSION_SOUND_PATH);
 }
 
 void Enemy::Initialize()
@@ -50,11 +52,15 @@ void Enemy::Update(GameWorld& world, sf::Time elapsed)
 
 	if (this->_life <= 0)
 	{
-		if (_currentAnimation.GetTexture() != _explosionAnimation.GetTexture())
+		if (_isExplosionStarted == false)
 		{
 			_timeAnimation = 0;
 			_currentAnimation = _explosionAnimation;
 			_currentAnimation.ResetTime(0);
+
+			SoundManager::PlayInstanceOf(_explosionSoundID);
+
+			_isExplosionStarted = true;
 		}
 		else if (_currentAnimation.IsDone())
 		{
